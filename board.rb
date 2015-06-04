@@ -9,14 +9,16 @@ class Board
 
   BOARD_EDGES = (0..7).to_a
 
-  def initialize
-    set_up_board
+  def initialize(set_up = true)
+    @grid = Array.new(8) { Array.new(8) }
+    set_up_board if set_up
+    nil
   end
 
   def set_up_board
-    @grid = Array.new(8) { Array.new(8) }
     setup_pieces(:white)
     setup_pieces(:black)
+    nil
   end
 
   def setup_pieces(color)
@@ -51,14 +53,14 @@ class Board
   end
 
   def [](pos)
-    raise "invalid positon" unless valid_pos?(pos)
+    #raise "invalid positon" unless valid_pos?(pos)
 
     r, c = pos
     @grid[r][c]
   end
 
   def []=(pos, piece)
-    raise "invalid positon" unless valid_pos?(pos)
+    #raise "invalid positon" unless valid_pos?(pos)
 
     r, c = pos
     @grid[r][c] = piece
@@ -70,6 +72,35 @@ class Board
 
   def empty_pos?(pos)
     self[pos].nil?
+  end
+
+  def pieces
+    @grid.flatten.compact
+  end
+
+  def dup
+    #debugger
+    dup_board = Board.new(false)
+
+    pieces.each do |piece|
+      Piece.new(piece.color, dup_board, piece.pos)
+    end
+
+    dup_board
+  end
+
+  def all_pieces_of_color(color)
+    pieces.select { |piece| piece.color == color }
+  end
+
+  def winner
+    if all_pieces_of_color(:white).count == 0
+      :black
+    elsif all_pieces_of_color(:black).count == 0
+      :white
+    else
+      false
+    end
   end
 
 end
