@@ -59,25 +59,17 @@ class Board
 
   def []=(pos, piece)
     raise "invalid positon" unless valid_pos?(pos)
-    # ArgumentError: wrong number of arguments (3 for 2)
 
     r, c = pos
     @grid[r][c] = piece
   end
 
   def valid_pos?(pos)
-    raise "Outside the board" if pos.any? { |coor| !BOARD_EDGES.include?(coor) }
-    true
+    pos.all? { |coor| BOARD_EDGES.include?(coor) }
   end
 
   def empty_pos?(pos)
     self[pos].nil?
   end
-
-
-
-
-
-
 
 end
