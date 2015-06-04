@@ -79,7 +79,7 @@ class Piece
     return false unless dir
     i, j = dir
 
-    to_jump_pos = piece_to_jump_pos(dir, to_pos)
+    to_jump_pos = jump_over_pos(dir, to_pos)
     return false if !to_jump_pos
 
     move = [pos[0] + i + i, pos[1] + j + j ]
@@ -107,7 +107,7 @@ class Piece
 
   end
 
-  def piece_to_jump_pos(dir, to_pos)
+  def jump_over_pos(dir, to_pos)
     i, j = dir
     pos = [to_pos[0] - i, to_pos[1] - j]
     piece = board[pos]
@@ -175,15 +175,5 @@ class Piece
       raise InvalidMoveError
     end
   end
-
-
-
-
-
-
-
-
-
-
 
 end

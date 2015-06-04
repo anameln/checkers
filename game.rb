@@ -5,8 +5,6 @@ class Game
   attr_reader :board
 
   def initialize
-    # @white_player = white_player
-    # @black_player = black_player
     @board = Board.new
     @current_player = :white
     nil
